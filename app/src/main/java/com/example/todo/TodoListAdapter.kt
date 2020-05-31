@@ -3,25 +3,41 @@ package com.example.todo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.databinding.ListItemBinding
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 
 class TodoListAdapter(private val dataset: Array<ListItemModel>) :
     RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
 
-    class TodoViewHolder(val binding : ListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class TodoViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+        var title : TextView = view.findViewById(R.id.title)
+        var description : TextView = view.findViewById(R.id.description)
+        var date : TextView = view.findViewById(R.id.date)
+        var done : CheckBox = view.findViewById(R.id.done)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding : ListItemBinding = DataBindingUtil.inflate(inflater, R.layout.list_item, parent, false)
-        return TodoViewHolder(binding)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        return TodoViewHolder(view)
     }
 
     override fun getItemCount() = dataset.size
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.binding.item = dataset[position]
+        holder.title.text = dataset[position].title
+        holder.description.text = dataset[position].description
+        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
+        val dateString :String = dataset[position].date.format(formatter)
+        holder.date.text = dateString
+        holder.done.isChecked = dataset[position].done
     }
 }
