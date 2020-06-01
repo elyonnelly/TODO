@@ -1,17 +1,13 @@
-package com.example.todo
+package com.example.todo.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todo.databinding.ListItemBinding
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import com.example.todo.ListItemModel
+import com.example.todo.R
 import java.time.format.DateTimeFormatter
 
 
