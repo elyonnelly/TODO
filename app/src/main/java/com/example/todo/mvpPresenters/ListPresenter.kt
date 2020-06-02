@@ -2,21 +2,17 @@ package com.example.todo.mvpPresenters
 
 import android.content.Intent
 import com.example.todo.ListItemModel
+import com.example.todo.Repository
 import com.example.todo.mvpViews.ListView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.time.LocalDate
 
 @InjectViewState
-class ListPresenter : MvpPresenter<ListView>() {
-    lateinit var dataset : Array<ListItemModel>
+class ListPresenter(private val dataSet : Repository<ListItemModel>) : MvpPresenter<ListView>() {
 
     override fun onFirstViewAttach() {
-        val date = LocalDate.of(1970, 1, 1)
-        val item =
-            ListItemModel("title", "description", date, false)
-        dataset = arrayOf(item, item, item)
-        viewState.setTodoItems(dataset)
+        viewState.setTodoItems(dataSet)
     }
 
     fun onAddNewItem(){

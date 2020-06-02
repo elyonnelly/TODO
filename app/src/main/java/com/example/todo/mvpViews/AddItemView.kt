@@ -7,8 +7,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface AddItemView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun addItem()
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setDate()
+    fun addItemAction()
 }

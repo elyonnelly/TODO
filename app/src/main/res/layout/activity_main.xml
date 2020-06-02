@@ -3,11 +3,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ListActivity">
+        tools:context=".view.MainActivity">
 
-        <fragment
-                android:id="@+id/list"
-                android:name="com.example.todo.view.ListFragment"
+        <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"

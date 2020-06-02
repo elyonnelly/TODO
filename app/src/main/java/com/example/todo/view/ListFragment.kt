@@ -20,24 +20,19 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    //здесь мы пихаем в ListPresenter репозиторий непосредственно, он в аппликейшн лежит
-    private val listPresenter by moxyPresenter { ListPresenter() }
-
+    private val listPresenter by moxyPresenter { ListPresenter((this.activity?.application as TodoApplication).repository) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_list, container, true)
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
         val addTaskButton = view.findViewById<FloatingActionButton>(R.id.add_task_button)
         addTaskButton.setOnClickListener {listPresenter.onAddNewItem() }
         return view
     }
 
-    //атогда в адаптер передавать когда? видимо
-
-    override fun setTodoItems(dataset: Array<ListItemModel>) {
-
+    override fun setTodoItems(dataset: Repository<ListItemModel>) {
         viewManager = LinearLayoutManager(this.activity)
         viewAdapter = TodoListAdapter(dataset)
 
@@ -45,11 +40,11 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     }
 
     override fun addNewItem() {
-        //почему тут нужны ?
         val addItemFragment = AddItemFragment()
         val transaction = fragmentManager?.beginTransaction()
-        transaction?.replace(R.id.list, addItemFragment)
+        transaction?.replace(R.id.container, addItemFragment)
         transaction?.addToBackStack(null)
+        //переходы назад чет не работают
 
         transaction?.commit()
     }
