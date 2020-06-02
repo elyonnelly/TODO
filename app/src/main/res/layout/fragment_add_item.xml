@@ -60,15 +60,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-    <DatePicker
-            android:id="@+id/datePicker"
+    <Button
+            android:id="@+id/selectDateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:spinnersShown="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/select_date_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionEditText" />
+
+    <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toEndOf="@+id/selectDateButton"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionEditText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

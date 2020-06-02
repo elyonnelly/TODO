@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
 import com.example.todo.R
 import com.example.todo.Repository
+import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
 
@@ -34,8 +35,9 @@ class TodoListAdapter(private val dataSet: List<ListItemModel>) :
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.title.text = dataSet[position].title
         holder.description.text = dataSet[position].description
-        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        val dateString :String = dataSet[position].date.format(formatter)
+        val formatter = SimpleDateFormat()
+        formatter.applyPattern("dd LLLL yyyy")
+        val dateString :String = formatter.format(dataSet[position].date)
         holder.date.text = dateString
         holder.done.isChecked = dataSet[position].done
     }
