@@ -19,4 +19,8 @@ class TodoRepository(private val todoList : MutableList<ListItemModel> = mutable
     override fun remove(i: Int) {
         todoList.removeAt(i)
     }
+
+    override fun getAllItems(): MutableList<ListItemModel> {
+        return todoList
+    }
 }

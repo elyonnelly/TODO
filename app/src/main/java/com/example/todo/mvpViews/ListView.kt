@@ -4,12 +4,14 @@ import com.example.todo.ListItemModel
 import com.example.todo.Repository
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.SingleStateStrategy
+import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 interface ListView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setTodoItems(dataset : Repository<ListItemModel>)
+    fun setTodoItems(dataSet : List<ListItemModel>)
 
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun addNewItem()
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToAddNewItemFragment()
 }

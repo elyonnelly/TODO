@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity(){
 
         val listFragment = ListFragment()
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, listFragment)
+        transaction.add(R.id.container, listFragment)
 
         transaction.commit()
     }

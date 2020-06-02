@@ -5,4 +5,5 @@ interface Repository<T> {
     fun get(i : Int) : T
     fun update(value : T)
     fun remove(i : Int)
+    fun getAllItems() : MutableList<T>
 }

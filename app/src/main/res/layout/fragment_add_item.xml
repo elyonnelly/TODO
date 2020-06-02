@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/descriptionLabel" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/goBackButton"
+            android:id="@+id/addNewItemButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -64,9 +64,10 @@
             android:id="@+id/datePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:spinnersShown="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionEditText" />
 

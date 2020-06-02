@@ -12,7 +12,7 @@ import com.example.todo.Repository
 import java.time.format.DateTimeFormatter
 
 
-class TodoListAdapter(private val dataSet: Repository<ListItemModel>) :
+class TodoListAdapter(private val dataSet: List<ListItemModel>) :
     RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
 
     //а эти присваивания происходят до вызова базового конструктора? это равносильно конструктору, да?
@@ -32,11 +32,11 @@ class TodoListAdapter(private val dataSet: Repository<ListItemModel>) :
     override fun getItemCount() = dataSet.size
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.title.text = dataSet.get(position).title
-        holder.description.text = dataSet.get(position).description
+        holder.title.text = dataSet[position].title
+        holder.description.text = dataSet[position].description
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        val dateString :String = dataSet.get(position).date.format(formatter)
+        val dateString :String = dataSet[position].date.format(formatter)
         holder.date.text = dateString
-        holder.done.isChecked = dataSet.get(position).done
+        holder.done.isChecked = dataSet[position].done
     }
 }
