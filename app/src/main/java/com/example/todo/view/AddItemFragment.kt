@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import com.example.todo.R
 import com.example.todo.TodoApplication
 import com.example.todo.mvpPresenters.AddItemPresenter
@@ -15,7 +16,7 @@ import moxy.ktx.moxyPresenter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class AddItemFragment : MvpAppCompatFragment(), AddItemView {
+class AddItemFragment : MvpAppCompatFragment(), AddItemView, DatePickerDialog.OnDateSetListener  {
     private val addItemPresenter by moxyPresenter { AddItemPresenter((activity?.application as TodoApplication).repository) }
 
     lateinit var date : LocalDate
@@ -35,7 +36,7 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
         else
             savedInstanceState.getSerializable("date") as LocalDate
 
-        setDateTextView(date.year, date.monthValue, date.dayOfMonth)
+        setDateTextView()
 
         addNewItemButton.setOnClickListener { addItemPresenter.onClickAddItem(titleEditText.text.toString(), descriptionEditText.text.toString(), date)}
         selectDateButton.setOnClickListener {onSelectDate()}
@@ -57,13 +58,16 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
         datePickerFragment.arguments = args
         //здесь этот фрагмент должен, получается, добавиться во fragmentManager,
         // и при onCreate он нормально пересоздастся
-
-        fragmentManager?.let { datePickerFragment.show(it, "") }
+        datePickerFragment.show(childFragmentManager, "")
     }
 
-    private fun setDateTextView(year : Int, month : Int, dayOfMonth : Int) {
-        val date = LocalDate.of(year, month, dayOfMonth)
+    private fun setDateTextView() {
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
         dateTextView.text = date.format(formatter)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        date = LocalDate.of(year, month, dayOfMonth)
+        setDateTextView()
     }
 }
