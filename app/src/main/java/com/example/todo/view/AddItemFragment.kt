@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter
 class AddItemFragment : MvpAppCompatFragment(), AddItemView {
     private val addItemPresenter by moxyPresenter { AddItemPresenter((activity?.application as TodoApplication).repository) }
 
+    lateinit var date : LocalDate
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,13 +27,23 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
         return inflater.inflate(R.layout.fragment_add_item, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val today = LocalDate.now()
-        setDateTextView(today.year, today.monthValue, today.dayOfMonth)
+        date = if (savedInstanceState == null)
+            LocalDate.now()
+        else
+            savedInstanceState.getSerializable("date") as LocalDate
 
-        addNewItemButton.setOnClickListener { addItemPresenter.onClickAddItem(titleEditText.text.toString(), descriptionEditText.text.toString(), dateTextView.text.toString())}
+        setDateTextView(date.year, date.monthValue, date.dayOfMonth)
+
+        addNewItemButton.setOnClickListener { addItemPresenter.onClickAddItem(titleEditText.text.toString(), descriptionEditText.text.toString(), date)}
         selectDateButton.setOnClickListener {onSelectDate()}
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("date", date)
     }
 
     override fun goBack() {
@@ -39,27 +51,19 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
     }
 
     private fun onSelectDate() {
-        val date = getData()
-        context?.let { it ->
-            //в DatePickerDialog передается не-nullable версия context
-            DatePickerDialog(
-                it,
-                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    setDateTextView(year, monthOfYear, dayOfMonth)
-                },
-                date.year, date.monthValue, date.dayOfMonth).show()
-        }
+        val datePickerFragment = DatePickerFragment()
+        val args = Bundle()
+        args.putSerializable("date", date)
+        datePickerFragment.arguments = args
+        //здесь этот фрагмент должен, получается, добавиться во fragmentManager,
+        // и при onCreate он нормально пересоздастся
+
+        fragmentManager?.let { datePickerFragment.show(it, "") }
     }
 
     private fun setDateTextView(year : Int, month : Int, dayOfMonth : Int) {
         val date = LocalDate.of(year, month, dayOfMonth)
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
         dateTextView.text = date.format(formatter)
-    }
-
-    //смущает неимоверное количество Parse и Format. Мб стоит вынести текущий объект модельки в listPresenter?
-    private fun getData(): LocalDate {
-        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        return LocalDate.parse(dateTextView.text, formatter)
     }
 }

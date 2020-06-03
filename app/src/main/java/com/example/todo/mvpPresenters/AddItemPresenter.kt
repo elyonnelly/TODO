@@ -13,9 +13,8 @@ import java.util.*
 @InjectViewState
 class AddItemPresenter(private val dataSet : Repository<ListItemModel>) : MvpPresenter<AddItemView>() {
 
-    fun onClickAddItem(title : String, description : String, dateString : String){
-        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        dataSet.update(ListItemModel(title, description, LocalDate.parse(dateString, formatter), done = false))
+    fun onClickAddItem(title : String, description : String, date : LocalDate){
+        dataSet.update(ListItemModel(title, description, date, done = false))
         viewState.goBack()
     }
 }

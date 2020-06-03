@@ -9,11 +9,12 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            val listFragment = ListFragment()
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.add(R.id.container, listFragment)
 
-        val listFragment = ListFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.container, listFragment)
-
-        transaction.commit()
+            transaction.commit()
+        }
     }
 }

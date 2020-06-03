@@ -2,4 +2,12 @@ package com.example.todo
 
 import android.app.Application
 
-class TodoApplication(val repository : Repository<ListItemModel> = TodoRepository()) : Application()
+class TodoApplication : Application() {
+    lateinit var repository : Repository<ListItemModel>
+        private set
+
+    override fun onCreate() {
+        super.onCreate()
+         repository = TodoRepository()
+    }
+}
