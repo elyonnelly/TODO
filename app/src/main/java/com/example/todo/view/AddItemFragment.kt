@@ -39,7 +39,7 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
     }
 
     private fun onSelectDate() {
-        val today = LocalDate.now()
+        val date = getData()
         context?.let { it ->
             //в DatePickerDialog передается не-nullable версия context
             DatePickerDialog(
@@ -47,7 +47,7 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     setDateTextView(year, monthOfYear, dayOfMonth)
                 },
-                today.year, today.monthValue, today.dayOfMonth).show()
+                date.year, date.monthValue, date.dayOfMonth).show()
         }
     }
 
@@ -55,5 +55,11 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
         val date = LocalDate.of(year, month, dayOfMonth)
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
         dateTextView.text = date.format(formatter)
+    }
+
+    //смущает неимоверное количество Parse и Format. Мб стоит вынести текущий объект модельки в listPresenter?
+    private fun getData(): LocalDate {
+        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
+        return LocalDate.parse(dateTextView.text, formatter)
     }
 }
