@@ -26,7 +26,6 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        //с трудом понимаю, как обходить эти ? ! !! типы и касты
         date = arguments?.getSerializable("date") as LocalDate
         return DatePickerDialog(activity as Context,this,  date.year, date.monthValue, date.dayOfMonth)
     }
