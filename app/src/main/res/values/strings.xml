@@ -8,4 +8,5 @@
     <string name="title">title</string>
     <string name="select_date">select date</string>
     <string name="select_date_button">Select date</string>
+    <string name="edit_date">edit date</string>
 </resources>

@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 class AddItemFragment : MvpAppCompatFragment(), AddItemView, DatePickerDialog.OnDateSetListener  {
     private val addItemPresenter by moxyPresenter { AddItemPresenter((activity?.application as TodoApplication).repository) }
 
-    lateinit var date : LocalDate
+    private lateinit var date : LocalDate
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,8 +56,6 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView, DatePickerDialog.On
         val args = Bundle()
         args.putSerializable("date", date)
         datePickerFragment.arguments = args
-        //здесь этот фрагмент должен, получается, добавиться во fragmentManager,
-        // и при onCreate он нормально пересоздастся
         datePickerFragment.show(childFragmentManager, "")
     }
 

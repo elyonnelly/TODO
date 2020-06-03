@@ -8,13 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
 import com.example.todo.R
-import com.example.todo.Repository
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
-class TodoListAdapter(private val dataSet: List<ListItemModel>) :
+class TodoListAdapter(private val dataSet: List<ListItemModel>, private val clickListener: OnEditClickListener) :
     RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
 
     class TodoViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
@@ -31,13 +28,15 @@ class TodoListAdapter(private val dataSet: List<ListItemModel>) :
 
     override fun getItemCount() = dataSet.size
 
-    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.title.text = dataSet[position].title
-        holder.description.text = dataSet[position].description
+    override fun onBindViewHolder(holder: TodoViewHolder, id: Int) {
+        holder.title.text = dataSet[id].title
+        holder.description.text = dataSet[id].description
 
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        holder.date.text = dataSet[position].date.format(formatter)
-
-        holder.done.isChecked = dataSet[position].done
+        holder.date.text = dataSet[id].date.format(formatter)
+        holder.done.isChecked = dataSet[id].done
+        holder.view.setOnClickListener {
+            clickListener.onClick(id)
+        }
     }
 }

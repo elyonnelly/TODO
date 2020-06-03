@@ -1,7 +1,7 @@
 package com.example.todo
 
-class TodoRepository(private val todoList : MutableList<ListItemModel> = mutableListOf()
-) : Repository<ListItemModel> {
+class TodoRepository(private val todoList : MutableList<ListItemModel> = mutableListOf())
+    : Repository<ListItemModel> {
 
     override val size: Int
         get() {
@@ -12,7 +12,7 @@ class TodoRepository(private val todoList : MutableList<ListItemModel> = mutable
         return todoList[i]
     }
 
-    override fun update(value : ListItemModel) {
+    override fun add(value : ListItemModel) {
         todoList.add(value)
     }
 
@@ -22,5 +22,9 @@ class TodoRepository(private val todoList : MutableList<ListItemModel> = mutable
 
     override fun getAllItems(): MutableList<ListItemModel> {
         return todoList
+    }
+
+    override fun update(id: Int, value : ListItemModel) {
+        todoList[id] = value
     }
 }

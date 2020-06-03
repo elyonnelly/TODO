@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
@@ -17,7 +16,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 
-class ListFragment : MvpAppCompatFragment(), ListView {
+class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -38,17 +37,34 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     }
 
     override fun setTodoItems(dataSet: List<ListItemModel>) {
-        viewAdapter = TodoListAdapter(dataSet)
+        viewAdapter = TodoListAdapter(dataSet, this)
         recyclerView.apply { adapter = viewAdapter; layoutManager  = viewManager }
     }
 
     override fun navigateToAddNewItemFragment() {
-        val addItemFragment = AddItemFragment()
+        navigateTo(AddItemFragment())
+    }
+
+    override fun navigateToEditNewItemFragment(id: Int) {
+        val editItemFragment = EditItemFragment()
+        val args = Bundle()
+        args.putInt("id", id)
+        editItemFragment.arguments = args
+
+        navigateTo(editItemFragment)
+    }
+
+    private fun navigateTo(fragment: MvpAppCompatFragment) {
         val transaction = fragmentManager?.beginTransaction()
-        transaction?.replace(R.id.container, addItemFragment)
+        transaction?.replace(R.id.container, fragment)
 
         transaction?.setReorderingAllowed(true)
         transaction?.addToBackStack(null)
         transaction?.commit()
     }
+
+    override fun onClick(id: Int) {
+        listPresenter.onClickEditNewItem(id)
+    }
+
 }
