@@ -40,9 +40,10 @@ class AddItemFragment : MvpAppCompatFragment(), AddItemView {
 
     private fun onSelectDate() {
         val today = LocalDate.now()
-        context?.let { it1 ->
+        context?.let { it ->
+            //в DatePickerDialog передается не-nullable версия context
             DatePickerDialog(
-                it1,
+                it,
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     setDateTextView(year, monthOfYear, dayOfMonth)
                 },

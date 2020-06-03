@@ -6,6 +6,7 @@ import com.example.todo.mvpViews.AddItemView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -13,11 +14,8 @@ import java.util.*
 class AddItemPresenter(private val dataSet : Repository<ListItemModel>) : MvpPresenter<AddItemView>() {
 
     fun onClickAddItem(title : String, description : String, dateString : String){
-        val format = SimpleDateFormat()
-        format.applyPattern("dd LLLL yyyy")
-        val date = format.parse(dateString) as Date
-
-        dataSet.update(ListItemModel(title, description, date, done = false))
+        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
+        dataSet.update(ListItemModel(title, description, LocalDate.parse(dateString, formatter), done = false))
         viewState.goBack()
     }
 }
