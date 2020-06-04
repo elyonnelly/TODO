@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
@@ -16,7 +17,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 
-class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener {
+class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener, OnChangeTaskStatusListener {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -37,7 +38,8 @@ class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener {
     }
 
     override fun setTodoItems(dataSet: List<ListItemModel>) {
-        viewAdapter = TodoListAdapter(dataSet, this)
+        //помечать выполненным таск
+        viewAdapter = TodoListAdapter(dataSet, this, this)
         recyclerView.apply { adapter = viewAdapter; layoutManager  = viewManager }
     }
 
@@ -65,6 +67,10 @@ class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener {
 
     override fun onClick(id: Int) {
         listPresenter.onClickEditNewItem(id)
+    }
+
+    override fun onChangeTaskStatus(id: Int, status: Boolean) {
+        listPresenter.onChangeTaskStatus(id, status)
     }
 
 }

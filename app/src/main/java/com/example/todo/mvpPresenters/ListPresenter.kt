@@ -20,4 +20,8 @@ class ListPresenter(private val repository : Repository<ListItemModel>) : MvpPre
     fun onClickEditNewItem(id : Int){
         viewState.navigateToEditNewItemFragment(id)
     }
+
+    fun onChangeTaskStatus(id : Int, status : Boolean) {
+        repository.get(id).done = status
+    }
 }

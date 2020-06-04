@@ -46,6 +46,8 @@ class EditItemFragment : MvpAppCompatFragment(), EditItemView, DatePickerDialog.
     override fun onResume() {
         super.onResume()
         val id = arguments?.getInt("id")
+        //в коде появилось много проверок на null, как с ними лучше обращаться?
+        // выбрасывать ли исключения, если на фрагмент не пришли нужные аргументы, например?
         if (id != null) {
             addItemPresenter.onSetItemToView(id)
         }
@@ -71,6 +73,7 @@ class EditItemFragment : MvpAppCompatFragment(), EditItemView, DatePickerDialog.
     private fun onSelectDate() {
         val datePickerFragment = DatePickerFragment()
         val args = Bundle()
+        //можно использовать putSerializable, или есть другие варианты?
         args.putSerializable("date", date)
         datePickerFragment.arguments = args
         datePickerFragment.show(childFragmentManager, "")
@@ -81,6 +84,8 @@ class EditItemFragment : MvpAppCompatFragment(), EditItemView, DatePickerDialog.
         dateTextView.text = date.format(formatter)
     }
 
+    //я превратила сам фрагмент в listener, так норм делать?
+    //месяц назад, когда я писала курсач, это мне казалось хорошей идеей (:
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         date = LocalDate.of(year, month, dayOfMonth)
         setDateTextView()

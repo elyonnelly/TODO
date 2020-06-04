@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
@@ -11,7 +12,9 @@ import com.example.todo.R
 import java.time.format.DateTimeFormatter
 
 
-class TodoListAdapter(private val dataSet: List<ListItemModel>, private val clickListener: OnEditClickListener) :
+class TodoListAdapter(private val dataSet: List<ListItemModel>,
+                      private val clickListener: OnEditClickListener,
+                      private val changeTaskStatusListener : OnChangeTaskStatusListener) :
     RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
 
     class TodoViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
@@ -35,6 +38,9 @@ class TodoListAdapter(private val dataSet: List<ListItemModel>, private val clic
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
         holder.date.text = dataSet[id].date.format(formatter)
         holder.done.isChecked = dataSet[id].done
+        holder.done.setOnCheckedChangeListener{
+                _: CompoundButton, b: Boolean -> changeTaskStatusListener.onChangeTaskStatus(id, b)
+        }
         holder.view.setOnClickListener {
             clickListener.onClick(id)
         }
