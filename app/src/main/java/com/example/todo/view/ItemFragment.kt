@@ -32,6 +32,7 @@ open class ItemFragment : MvpAppCompatFragment(), ItemView, DatePickerDialog.OnD
         if (savedInstanceState != null) {
             date = savedInstanceState.getSerializable(INSTANCE_STATE_DATE) as LocalDate
         }
+        updateDateTextView()
 
         selectDateButton.setOnClickListener {onSelectDate()}
     }
