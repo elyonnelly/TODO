@@ -10,7 +10,7 @@ import moxy.viewstate.strategy.StateStrategyType
 
 interface ListView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setTodoItems(dataSet : List<ListItemModel>)
+    fun setTodoItems(dataSet: List<ListItemModel>)
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateToAddNewItemFragment()

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
@@ -17,12 +16,25 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 
-class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener, OnChangeTaskStatusListener {
+class ListFragment : MvpAppCompatFragment(), ListView {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     private val listPresenter by moxyPresenter { ListPresenter((this.activity?.application as TodoApplication).repository) }
+
+    private val clickListener : OnEditClickListener = object : OnEditClickListener {
+        override fun onClick(id: Int) {
+            listPresenter.onClickEditNewItem(id)
+        }
+    }
+
+    private val changeTaskStatusListener : OnChangeTaskStatusListener = object  : OnChangeTaskStatusListener {
+        override fun onChangeTaskStatus(id: Int, status: Boolean) {
+            listPresenter.onChangeTaskStatus(id, status)
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +49,13 @@ class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener, OnCh
         viewManager = LinearLayoutManager(this.activity)
     }
 
+    override fun onResume() {
+        super.onResume()
+        listPresenter.onSetTodoItems()
+    }
+
     override fun setTodoItems(dataSet: List<ListItemModel>) {
-        //помечать выполненным таск
-        viewAdapter = TodoListAdapter(dataSet, this, this)
+        viewAdapter = TodoListAdapter(dataSet, clickListener, changeTaskStatusListener)
         recyclerView.apply { adapter = viewAdapter; layoutManager  = viewManager }
     }
 
@@ -48,12 +64,7 @@ class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener, OnCh
     }
 
     override fun navigateToEditNewItemFragment(id: Int) {
-        val editItemFragment = EditItemFragment()
-        val args = Bundle()
-        args.putInt("id", id)
-        editItemFragment.arguments = args
-
-        navigateTo(editItemFragment)
+        navigateTo(EditItemFragment.newInstance(id))
     }
 
     private fun navigateTo(fragment: MvpAppCompatFragment) {
@@ -63,14 +74,6 @@ class ListFragment : MvpAppCompatFragment(), ListView, OnEditClickListener, OnCh
         transaction?.setReorderingAllowed(true)
         transaction?.addToBackStack(null)
         transaction?.commit()
-    }
-
-    override fun onClick(id: Int) {
-        listPresenter.onClickEditNewItem(id)
-    }
-
-    override fun onChangeTaskStatus(id: Int, status: Boolean) {
-        listPresenter.onChangeTaskStatus(id, status)
     }
 
 }

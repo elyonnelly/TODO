@@ -12,6 +12,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.todo.R
 import java.time.LocalDate
 
+private const val ARG_DATE = "date"
+
 class DatePickerFragment : DialogFragment()  {
 
     override fun onCreateView(
@@ -21,17 +23,21 @@ class DatePickerFragment : DialogFragment()  {
         return inflater.inflate(R.layout.fragment_date_picker, container, false)
     }
 
-    //при пересоздании вьюха сама справляется запоминать, какая в ней дата?
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val datePickerDate = arguments?.getSerializable("date") as LocalDate
-        return if (parentFragment is AddItemFragment) {
-            DatePickerDialog(activity as Context,
-                parentFragment as AddItemFragment,
+        val datePickerDate = arguments?.getSerializable(ARG_DATE) as LocalDate
+        return DatePickerDialog(activity!!,
+                parentFragment as DatePickerDialog.OnDateSetListener,
                 datePickerDate.year, datePickerDate.monthValue, datePickerDate.dayOfMonth)
-        } else {
-            DatePickerDialog(activity as Context,
-                parentFragment as EditItemFragment,
-                datePickerDate.year, datePickerDate.monthValue, datePickerDate.dayOfMonth)
+    }
+
+    companion object {
+
+        fun createInstance(date : LocalDate) : DatePickerFragment {
+            val datePickerFragment = DatePickerFragment()
+            val args = Bundle()
+            args.putSerializable(ARG_DATE, date)
+            datePickerFragment.arguments = args
+            return datePickerFragment
         }
     }
 }

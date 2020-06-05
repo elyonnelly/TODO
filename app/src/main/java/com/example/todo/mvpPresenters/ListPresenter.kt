@@ -9,7 +9,7 @@ import moxy.MvpPresenter
 @InjectViewState
 class ListPresenter(private val repository : Repository<ListItemModel>) : MvpPresenter<ListView>() {
 
-    override fun onFirstViewAttach() {
+    fun onSetTodoItems() {
         viewState.setTodoItems(repository.getAllItems())
     }
 
@@ -22,6 +22,7 @@ class ListPresenter(private val repository : Repository<ListItemModel>) : MvpPre
     }
 
     fun onChangeTaskStatus(id : Int, status : Boolean) {
-        repository.get(id).done = status
+        val oldItem = repository.get(id)
+        repository.update(oldItem.copy(done = status))
     }
 }

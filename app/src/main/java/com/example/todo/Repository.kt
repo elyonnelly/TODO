@@ -2,9 +2,9 @@ package com.example.todo
 
 interface Repository<T> {
     val size : Int
-    fun get(i : Int) : T
+    fun get(id : Int) : T
     fun add(value : T)
-    fun update(id : Int, value : T)
-    fun remove(i : Int)
-    fun getAllItems() : MutableList<T>
+    fun update(value : T)
+    fun remove(id : Int)
+    fun getAllItems() : List<ListItemModel>
 }
