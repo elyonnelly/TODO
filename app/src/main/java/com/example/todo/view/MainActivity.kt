@@ -1,8 +1,10 @@
 package com.example.todo.view
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todo.R
+import kotlinx.android.synthetic.main.layout_with_toolbar.*
 
 class MainActivity : AppCompatActivity(){
 
@@ -16,5 +18,11 @@ class MainActivity : AppCompatActivity(){
 
             transaction.commit()
         }
+        setSupportActionBar(toolbar_actionbar);
     }
+
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.select_task_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }*/
 }

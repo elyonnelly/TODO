@@ -1,5 +1,6 @@
 package com.example.todo.mvpViews
 
+import android.view.View
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
 import moxy.MvpView
@@ -17,4 +18,7 @@ interface ListView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateToEditNewItemFragment(id : Int)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun changeEditClickListener(view : View, id : Int, status : Boolean)
 }

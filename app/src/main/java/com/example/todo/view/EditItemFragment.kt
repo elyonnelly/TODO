@@ -34,7 +34,6 @@ class EditItemFragment : ItemFragment()  {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(id : Int) =
             EditItemFragment().apply {
                 arguments = Bundle().apply {

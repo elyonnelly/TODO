@@ -37,11 +37,13 @@ class TodoListAdapter(private val dataSet: List<ListItemModel>,
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
         holder.date.text = dataSet[position].date.format(formatter)
         holder.done.isChecked = dataSet[position].done
-        holder.done.setOnCheckedChangeListener{
-                _: CompoundButton, b: Boolean -> changeTaskStatusListener.onChangeTaskStatus(position, b)
+        holder.done.setOnCheckedChangeListener {
+            _: CompoundButton, b: Boolean -> changeTaskStatusListener.onChangeTaskStatus(holder.view, dataSet[position].id, b)
         }
-        holder.view.setOnClickListener {
-            clickListener.onClick(dataSet[position].id!!)
+        if (!holder.done.isChecked) {
+            holder.view.setOnClickListener {
+                clickListener.onClick(dataSet[position].id)
+            }
         }
     }
 }

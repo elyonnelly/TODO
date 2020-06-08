@@ -1,9 +1,7 @@
 package com.example.todo.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
@@ -30,16 +28,16 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     }
 
     private val changeTaskStatusListener : OnChangeTaskStatusListener = object  : OnChangeTaskStatusListener {
-        override fun onChangeTaskStatus(id: Int, status: Boolean) {
-            listPresenter.onChangeTaskStatus(id, status)
+        override fun onChangeTaskStatus(view: View, id: Int, status: Boolean) {
+            listPresenter.onChangeTaskStatus(view, id, status)
         }
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -51,7 +49,30 @@ class ListFragment : MvpAppCompatFragment(), ListView {
 
     override fun onResume() {
         super.onResume()
-        listPresenter.onSetTodoItems()
+        listPresenter.onShowAll()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.select_task_menu, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.select_all -> {
+                listPresenter.onShowAll()
+                return true
+            }
+            R.id.select_active -> {
+                listPresenter.onShowActive()
+                return true
+            }
+            R.id.select_done -> {
+                listPresenter.onShowDone()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun setTodoItems(dataSet: List<ListItemModel>) {
@@ -66,6 +87,18 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     override fun navigateToEditNewItemFragment(id: Int) {
         navigateTo(EditItemFragment.newInstance(id))
     }
+
+    override fun changeEditClickListener(view: View, id: Int, status : Boolean) {
+        if (!status) {
+            view.setOnClickListener {
+                clickListener.onClick(id)
+            }
+        }
+        else {
+            view.setOnClickListener(null)
+        }
+    }
+
 
     private fun navigateTo(fragment: MvpAppCompatFragment) {
         val transaction = fragmentManager?.beginTransaction()

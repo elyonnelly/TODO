@@ -17,19 +17,19 @@ class TodoRepository : Repository<ListItemModel> {
     }
 
     override fun add(value : ListItemModel) {
-        value.id = currentId++
-        todoList[value.id!!] = value
+        todoList[currentId] = value.copy(id = currentId)
+        currentId++
     }
 
     override fun remove(id: Int) {
         todoList.remove(id)
     }
 
-    override fun getAllItems(): MutableList<ListItemModel> {
+    override fun getAllItems(): List<ListItemModel> {
         return todoList.values.toMutableList()
     }
 
     override fun update(value : ListItemModel) {
-        todoList[value.id!!] = value
+        todoList[value.id] = value
     }
 }

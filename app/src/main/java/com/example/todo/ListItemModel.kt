@@ -7,4 +7,4 @@ data class ListItemModel(
     val description: String,
     val date: LocalDate,
     val done: Boolean,
-    var id: Int? = null)
+    val id: Int)

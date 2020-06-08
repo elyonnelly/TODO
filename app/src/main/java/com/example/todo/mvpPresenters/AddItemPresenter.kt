@@ -16,7 +16,7 @@ class AddItemPresenter(private val repository : Repository<ListItemModel>) : Mvp
     }
 
     fun onClickAddItem(title : String, description : String, date : LocalDate) {
-        repository.add(ListItemModel(title, description, date, done = false))
+        repository.add(ListItemModel(title, description, date, false, 0))
         viewState.goBack()
     }
 }
