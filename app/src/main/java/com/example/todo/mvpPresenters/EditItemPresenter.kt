@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 @InjectViewState
 class EditItemPresenter(id : Int, repository : Repository<ListItemModel>,
-                        val interactor: EditItemInteractor = EditItemInteractor(id, repository))
+                        private val interactor: EditItemInteractor = EditItemInteractor(id, repository))
                         : MvpPresenter<ItemView>() {
 
     override fun onFirstViewAttach() {

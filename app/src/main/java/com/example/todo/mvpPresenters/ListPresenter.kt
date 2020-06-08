@@ -7,10 +7,11 @@ import com.example.todo.interactors.ListInteractor
 import com.example.todo.mvpViews.ListView
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import java.util.*
 
 @InjectViewState
 class ListPresenter(repository : Repository<ListItemModel>,
-                    val interactor: ListInteractor = ListInteractor(repository))
+                    private val interactor: ListInteractor = ListInteractor(repository))
                     : MvpPresenter<ListView>() {
 
     fun onShowAll() {
