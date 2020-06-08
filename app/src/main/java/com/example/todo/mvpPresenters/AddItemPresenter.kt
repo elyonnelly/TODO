@@ -2,13 +2,17 @@ package com.example.todo.mvpPresenters
 
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
+import com.example.todo.interactors.AddItemInteractor
+import com.example.todo.interactors.ListInteractor
 import com.example.todo.mvpViews.ItemView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.time.LocalDate
 
 @InjectViewState
-class AddItemPresenter(private val repository : Repository<ListItemModel>) : MvpPresenter<ItemView>() {
+class AddItemPresenter(repository : Repository<ListItemModel>,
+                       val interactor: AddItemInteractor = AddItemInteractor(repository))
+                        : MvpPresenter<ItemView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -16,7 +20,7 @@ class AddItemPresenter(private val repository : Repository<ListItemModel>) : Mvp
     }
 
     fun onClickAddItem(title : String, description : String, date : LocalDate) {
-        repository.add(ListItemModel(title, description, date, false, 0))
+        interactor.addItem(title, description, date)
         viewState.goBack()
     }
 }

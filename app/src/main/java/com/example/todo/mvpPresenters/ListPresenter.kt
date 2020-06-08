@@ -3,15 +3,18 @@ package com.example.todo.mvpPresenters
 import android.view.View
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
+import com.example.todo.interactors.ListInteractor
 import com.example.todo.mvpViews.ListView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class ListPresenter(private val repository : Repository<ListItemModel>) : MvpPresenter<ListView>() {
+class ListPresenter(repository : Repository<ListItemModel>,
+                    val interactor: ListInteractor = ListInteractor(repository))
+                    : MvpPresenter<ListView>() {
 
     fun onShowAll() {
-        viewState.setTodoItems(repository.getAllItems())
+        viewState.setTodoItems(interactor.getAll())
     }
 
     fun onClickAddNewItem(){
@@ -23,30 +26,15 @@ class ListPresenter(private val repository : Repository<ListItemModel>) : MvpPre
     }
 
     fun onChangeTaskStatus(view : View, id : Int, status : Boolean) {
-        val oldItem = repository.get(id)
-        repository.update(oldItem.copy(done = status))
+        interactor.changeTaskStatus(id, status)
         viewState.changeEditClickListener(view, id, status)
     }
 
     fun onShowActive() {
-        val tasks = repository.getAllItems()
-        val activeTasks = mutableListOf<ListItemModel>()
-        for (task in tasks) {
-            if (!task.done) {
-                activeTasks.add(task)
-            }
-        }
-        viewState.setTodoItems(activeTasks.toList())
+        viewState.setTodoItems(interactor.getActive())
     }
 
     fun onShowDone() {
-        val tasks = repository.getAllItems()
-        val doneTasks = mutableListOf<ListItemModel>()
-        for (task in tasks) {
-            if (task.done) {
-                doneTasks.add(task)
-            }
-        }
-        viewState.setTodoItems(doneTasks.toList())
+        viewState.setTodoItems(interactor.getDone())
     }
 }
