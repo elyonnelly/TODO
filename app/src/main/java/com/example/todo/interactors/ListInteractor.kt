@@ -11,24 +11,12 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
 
     fun getActive() : List<ListItemModel> {
         val items = repository.getAllItems()
-        val active = mutableListOf<ListItemModel>()
-        for (item in items) {
-            if (!item.done) {
-                active.add(item)
-            }
-        }
-        return active
+        return items.filter{!it.done}.toList()
     }
 
     fun getDone() : List<ListItemModel> {
         val items = repository.getAllItems()
-        val done = mutableListOf<ListItemModel>()
-        for (task in items) {
-            if (task.done) {
-                done.add(task)
-            }
-        }
-        return done
+        return items.filter{it.done}.toList()
     }
 
     fun changeTaskStatus(id : Int, status : Boolean) {
