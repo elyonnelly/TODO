@@ -1,6 +1,8 @@
 package com.example.todo
 
 import android.app.Application
+import com.example.todo.database.TodoDbRepository
+import com.example.todo.database.TodoListRoomDatabase
 
 class TodoApplication : Application() {
     lateinit var repository : Repository<ListItemModel>
@@ -8,6 +10,6 @@ class TodoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-         repository = SimpleTodoRepository()
+        repository = TodoDbRepository(TodoListRoomDatabase.getDatabase(context = this).todoListDao())//SimpleTodoRepository()
     }
 }

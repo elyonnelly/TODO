@@ -10,6 +10,7 @@ data class ListItemEntity (
     @PrimaryKey val id: Int,
     @ColumnInfo val title: String,
     @ColumnInfo val description: String,
-   // @ColumnInfo val date: LocalDate,
+    //todo добавить конвертер видимо
+    @ColumnInfo val date: String,
     @ColumnInfo val done: Boolean
 )

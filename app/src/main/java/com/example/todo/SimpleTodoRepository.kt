@@ -25,7 +25,7 @@ class SimpleTodoRepository : Repository<ListItemModel> {
         todoList.remove(id)
     }
 
-    override fun getAll(): List<ListItemModel> {
+    override suspend fun getAll(): List<ListItemModel> {
         return todoList.values.toMutableList()
     }
 

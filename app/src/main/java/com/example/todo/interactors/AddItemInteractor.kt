@@ -7,6 +7,6 @@ import java.time.LocalDate
 class AddItemInteractor(private val repository : Repository<ListItemModel>) {
 
     fun addItem(title : String, description : String, date : LocalDate) {
-        repository.add(ListItemModel(title, description, date, false, 0))
+        repository.add(ListItemModel(0, title, description, date, false))
     }
 }
