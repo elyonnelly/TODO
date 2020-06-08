@@ -2,7 +2,9 @@ package com.example.todo.database
 
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -31,21 +33,13 @@ class TodoDbRepository(private val todoDao : TodoDao) : Repository<ListItemModel
         return todoDao.getAll().map { entity -> entity.copyToModel() }
     }
 
-   /* private fun convertDateToString(date : LocalDate) : String {
-        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        return date.format(formatter)
-    }
-    private fun convertStringToDate(stringValue : String) : LocalDate {
-        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        return LocalDate.parse(stringValue, formatter)
-    }*/
 }
 
 private fun ListItemEntity.copyToModel(): ListItemModel {
     return ListItemModel(id,
                         title,
                         description,
-                        LocalDate.parse(date),
+                        date,
                         done)
 }
 
@@ -53,6 +47,6 @@ private fun ListItemModel.copyToEntity(): ListItemEntity {
     return ListItemEntity(id,
                             title,
                             description,
-                            date.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")),
+                            date,
                             done)
 }

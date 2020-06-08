@@ -1,17 +1,14 @@
 package com.example.todo.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 @Database(entities = [ListItemEntity::class], version = 1)
+@TypeConverters(DateTypeConverter::class)
 abstract class TodoListRoomDatabase : RoomDatabase() {
     abstract fun todoListDao() : TodoDao
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
         @Volatile
         private var INSTANCE: TodoListRoomDatabase? = null
 
