@@ -21,13 +21,14 @@ class ListPresenter(repository : Repository<ListItemModel>,
         viewState.navigateToAddNewItemFragment()
     }
 
-    fun onClickEditNewItem(id : Int){
-        viewState.navigateToEditNewItemFragment(id)
+    fun onClickEditNewItem(id : Int) {
+        if (!interactor.checkTaskStatus(id)) {
+            viewState.navigateToEditNewItemFragment(id)
+        }
     }
 
-    fun onChangeTaskStatus(view : View, id : Int, status : Boolean) {
+    fun onChangeTaskStatus(id : Int, status : Boolean) {
         interactor.changeTaskStatus(id, status)
-        viewState.changeEditClickListener(view, id, status)
     }
 
     fun onShowActive() {

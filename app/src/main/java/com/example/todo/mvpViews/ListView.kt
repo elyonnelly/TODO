@@ -19,6 +19,4 @@ interface ListView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun navigateToEditNewItemFragment(id : Int)
 
-    @StateStrategyType(SkipStrategy::class)
-    fun changeEditClickListener(view : View, id : Int, status : Boolean)
 }

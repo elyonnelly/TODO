@@ -28,8 +28,8 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     }
 
     private val changeTaskStatusListener : OnChangeTaskStatusListener = object  : OnChangeTaskStatusListener {
-        override fun onChangeTaskStatus(view: View, id: Int, status: Boolean) {
-            listPresenter.onChangeTaskStatus(view, id, status)
+        override fun onChangeTaskStatus(id: Int, status: Boolean) {
+            listPresenter.onChangeTaskStatus(id, status)
         }
     }
 
@@ -86,17 +86,6 @@ class ListFragment : MvpAppCompatFragment(), ListView {
 
     override fun navigateToEditNewItemFragment(id: Int) {
         navigateTo(EditItemFragment.newInstance(id))
-    }
-
-    override fun changeEditClickListener(view: View, id: Int, status : Boolean) {
-        if (!status) {
-            view.setOnClickListener {
-                clickListener.onClick(id)
-            }
-        }
-        else {
-            view.setOnClickListener(null)
-        }
     }
 
 

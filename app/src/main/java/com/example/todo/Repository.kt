@@ -6,5 +6,5 @@ interface Repository<T> {
     fun add(value : T)
     fun update(value : T)
     fun remove(id : Int)
-    fun getAllItems() : List<ListItemModel>
+    fun getAll() : List<ListItemModel>
 }

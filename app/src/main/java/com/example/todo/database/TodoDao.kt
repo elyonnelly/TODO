@@ -1,0 +1,19 @@
+package com.example.todo.database
+
+import androidx.room.*
+
+@Dao
+interface TodoDao {
+    @Query("SELECT COUNT(*) FROM item_table")
+    fun getSize() : Int
+    @Query("SELECT * FROM item_table WHERE ID = (:id)")
+    fun get(id : Int) : ListItemEntity
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun add(value : ListItemEntity)
+    @Query("DELETE FROM item_table WHERE ID = (:id)")
+    fun remove(id : Int)
+    @Query("SELECT * FROM item_table")
+    fun getAll() : List<ListItemEntity>
+    @Update
+    fun update(value : ListItemEntity)
+}
