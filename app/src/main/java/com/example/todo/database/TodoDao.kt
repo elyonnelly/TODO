@@ -8,7 +8,7 @@ interface TodoDao {
     fun getSize() : Int
     @Query("SELECT * FROM item_table WHERE ID = :id")
     fun getById(id : Int) : ListItemEntity
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     fun add(value : ListItemEntity)
     @Query("DELETE FROM item_table WHERE ID = :id")
     fun remove(id : Int)

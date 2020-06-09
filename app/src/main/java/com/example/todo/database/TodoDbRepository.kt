@@ -18,7 +18,7 @@ class TodoDbRepository(private val todoDao : TodoDao) : Repository<ListItemModel
     }
 
     override fun add(value: ListItemModel) {
-        todoDao.add(value.copyToEntity())
+        todoDao.add(value.copy(id = size).copyToEntity())
     }
 
     override fun update(value: ListItemModel) {
