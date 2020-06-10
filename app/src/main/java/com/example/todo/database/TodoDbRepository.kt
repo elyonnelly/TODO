@@ -2,6 +2,13 @@ package com.example.todo.database
 
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
+import com.example.todo.copyToEntity
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -9,44 +16,33 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class TodoDbRepository(private val todoDao : TodoDao) : Repository<ListItemModel> {
-    override val size: Int
-        get() = todoDao.getSize()
+    var currentId : Int = 0
 
-    override fun get(id: Int): ListItemModel {
-        val itemEntity = todoDao.getById(id)
-        return itemEntity.copyToModel()
+    init {
+        todoDao.getSize().subscribeOn(Schedulers.io()).subscribe {
+            size -> currentId = size
+        }
     }
 
-    override fun add(value: ListItemModel) {
-        todoDao.add(value.copy(id = size).copyToEntity())
+    override fun get(id: Int): Single<ListItemEntity> {
+        return todoDao.getById(id)
+                .subscribeOn(Schedulers.io())
     }
 
-    override fun update(value: ListItemModel) {
-        todoDao.update(value.copyToEntity())
+    override fun add(value: ListItemModel) : Completable {
+        return todoDao.add(value.copy(id = currentId++).copyToEntity()).subscribeOn(Schedulers.io())
     }
 
-    override fun remove(id: Int) {
-        todoDao.remove(id)
+    override fun update(value: ListItemModel) : Completable {
+        return todoDao.update(value.copyToEntity()).subscribeOn(Schedulers.io())
     }
 
-    override fun getAll(): List<ListItemModel>  {
-        return todoDao.getAll().map { entity -> entity.copyToModel() }
+    override fun remove(id: Int) : Completable {
+        return todoDao.remove(id).subscribeOn(Schedulers.io())
     }
 
+    override fun getAll(): Single<List<ListItemEntity>> {
+        return todoDao.getAll().subscribeOn(Schedulers.io())
+    }
 }
 
-private fun ListItemEntity.copyToModel(): ListItemModel {
-    return ListItemModel(id,
-                        title,
-                        description,
-                        date,
-                        done)
-}
-
-private fun ListItemModel.copyToEntity(): ListItemEntity {
-    return ListItemEntity(id,
-                            title,
-                            description,
-                            date,
-                            done)
-}

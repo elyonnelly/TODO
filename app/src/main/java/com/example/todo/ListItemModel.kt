@@ -1,5 +1,6 @@
 package com.example.todo
 
+import com.example.todo.database.ListItemEntity
 import java.time.LocalDate
 
 data class ListItemModel(
@@ -8,3 +9,11 @@ data class ListItemModel(
     val description: String,
     val date: LocalDate,
     val done: Boolean)
+
+fun ListItemModel.copyToEntity(): ListItemEntity {
+    return ListItemEntity(id,
+        title,
+        description,
+        date,
+        done)
+}

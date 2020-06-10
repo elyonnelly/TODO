@@ -1,10 +1,14 @@
 package com.example.todo
 
+import com.example.todo.database.ListItemEntity
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Single
+
 interface Repository<T> {
-    val size : Int
-    fun get(id : Int) : T
-    fun add(value : T)
-    fun update(value : T)
-    fun remove(id : Int)
-    fun getAll() : List<ListItemModel>
+    fun get(id : Int) : Single<ListItemEntity>
+    fun add(value : T): Completable
+    fun update(value : T): Completable
+    fun remove(id : Int): Completable
+    fun getAll() : Single<List<ListItemEntity>>
 }

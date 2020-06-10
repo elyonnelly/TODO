@@ -3,12 +3,8 @@ package com.example.todo.mvpPresenters
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
 import com.example.todo.interactors.AddItemInteractor
-import com.example.todo.interactors.ListInteractor
 import com.example.todo.mvpViews.ItemView
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.time.LocalDate
@@ -24,13 +20,10 @@ class AddItemPresenter(repository : Repository<ListItemModel>,
     }
 
     fun onClickAddItem(title : String, description : String, date : LocalDate) {
-        Observable.fromCallable {
-            interactor.addItem(title, description, date)
-        }
-            .subscribeOn(Schedulers.io())
+        interactor.addItem(title, description, date)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-        //interactor.addItem(title, description, date)
-        viewState.goBack()
+            .subscribe {
+                viewState.goBack()
+            }
     }
 }

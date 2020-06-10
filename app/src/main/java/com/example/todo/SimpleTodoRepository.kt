@@ -2,7 +2,7 @@ package com.example.todo
 
 import java.time.LocalDate
 
-class SimpleTodoRepository : Repository<ListItemModel> {
+/*class SimpleTodoRepository : Repository<ListItemModel> {
 
     private val todoList : MutableMap<Int, ListItemModel> = mutableMapOf()
     private var currentId : Int = 0;
@@ -32,4 +32,4 @@ class SimpleTodoRepository : Repository<ListItemModel> {
     override fun update(value : ListItemModel) {
         todoList[value.id] = value
     }
-}
+}*/
