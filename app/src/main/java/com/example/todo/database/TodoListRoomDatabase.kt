@@ -6,6 +6,7 @@ import androidx.room.*
 @Database(entities = [ListItemEntity::class], version = 1)
 @TypeConverters(DateTypeConverter::class)
 abstract class TodoListRoomDatabase : RoomDatabase() {
+    //наверное это @Provide??
     abstract fun todoListDao() : TodoDao
 
     companion object {

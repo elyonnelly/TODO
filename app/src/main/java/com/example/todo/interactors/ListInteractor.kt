@@ -14,7 +14,9 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
     fun getAll() : Single<List<ListItemModel>> {
         return repository.getAll()
             .subscribeOn(Schedulers.io())
-            .map { entities -> entities.map { entity -> entity.copyToModel() } }
+            .map {
+                    entities -> entities.map { entity -> entity.copyToModel() }
+            }
     }
 
     fun getActive() : Single<List<ListItemModel>> {
