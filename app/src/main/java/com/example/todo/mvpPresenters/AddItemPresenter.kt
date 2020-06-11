@@ -8,10 +8,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.time.LocalDate
+import javax.inject.Inject
 
 @InjectViewState
-class AddItemPresenter(repository : Repository<ListItemModel>,
-                       private val interactor: AddItemInteractor = AddItemInteractor(repository))
+class AddItemPresenter @Inject constructor(repository : Repository<ListItemModel>,
+                                           private val interactor: AddItemInteractor = AddItemInteractor(repository))
                         : MvpPresenter<ItemView>() {
 
     override fun onFirstViewAttach() {

@@ -5,7 +5,7 @@ import com.example.todo.components.AppComponent
 import com.example.todo.components.DaggerAppComponent
 import com.example.todo.components.DaggerDatabaseComponent
 import com.example.todo.components.DatabaseComponent
-import com.example.todo.modules.AppModule
+import com.example.todo.modules.appComponent.AppModule
 import javax.inject.Inject
 
 class TodoApplication : Application() {
@@ -27,7 +27,7 @@ class TodoApplication : Application() {
 
     protected fun buildAppComponent() : AppComponent {
         return DaggerAppComponent.builder()
-            .appModule(AppModule(this))
+            .context(this)
             .build()
     }
 

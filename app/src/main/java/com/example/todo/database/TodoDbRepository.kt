@@ -14,8 +14,9 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class TodoDbRepository(private val todoDao : TodoDao) : Repository<ListItemModel> {
+class TodoDbRepository @Inject constructor(private val todoDao : TodoDao) : Repository<ListItemModel> {
     var currentId : Int = 0
 
     //это тоже Provide???
