@@ -18,7 +18,7 @@ class AddItemModule {
 
     @Provides
     @AddItemFragmentScope
-    fun provideAddItemPresenter(repository: Repository<ListItemModel>) : AddItemPresenter {
-        return AddItemPresenter(repository)
+    fun provideAddItemPresenter(interactor: AddItemInteractor) : AddItemPresenter {
+        return AddItemPresenter(interactor)
     }
 }

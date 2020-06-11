@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.todo.TodoApplication
 import com.example.todo.components.AddItemComponent
 import com.example.todo.components.DaggerAddItemComponent
 import kotlinx.android.synthetic.main.fragment_item.*
@@ -23,7 +24,10 @@ class AddItemFragment : ItemFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        addItemComponent = DaggerAddItemComponent.builder().build()
+        addItemComponent = DaggerAddItemComponent
+            .builder()
+            .appComponent((activity?.application as TodoApplication).appComponent)
+            .build()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

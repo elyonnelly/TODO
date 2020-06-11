@@ -4,14 +4,14 @@ import com.example.todo.ListItemModel
 import com.example.todo.Repository
 import com.example.todo.interactors.EditItemInteractor
 import com.example.todo.mvpViews.ItemView
+import com.example.todo.view.ItemParameters
 import io.reactivex.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.time.LocalDate
 
 @InjectViewState
-class EditItemPresenter(id : Int, repository : Repository<ListItemModel>,
-                        private val interactor: EditItemInteractor = EditItemInteractor(id, repository))
+class EditItemPresenter(private val interactor: EditItemInteractor)
                         : MvpPresenter<ItemView>() {
 
     override fun onFirstViewAttach() {

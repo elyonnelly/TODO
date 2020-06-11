@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
 import com.example.todo.R
 import com.example.todo.TodoApplication
+import com.example.todo.components.DaggerListComponent
+import com.example.todo.components.ListComponent
 import com.example.todo.mvpPresenters.ListPresenter
 import com.example.todo.mvpViews.ListView
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -19,7 +21,9 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private val listPresenter by moxyPresenter { ListPresenter((this.activity?.application as TodoApplication).repository) }
+    lateinit var listComponent : ListComponent
+
+    private val listPresenter by moxyPresenter { listComponent.getPresenter() }
 
     private val clickListener : OnEditClickListener = object : OnEditClickListener {
         override fun onClick(id: Int) {
@@ -37,6 +41,11 @@ class ListFragment : MvpAppCompatFragment(), ListView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        listComponent = DaggerListComponent
+            .builder()
+            .appComponent((activity?.application as TodoApplication).appComponent)
+            .build()
+
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_list, container, false)
     }

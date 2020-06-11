@@ -3,6 +3,7 @@ package com.example.todo
 import android.app.Application
 import com.example.todo.components.AppComponent
 import com.example.todo.components.DaggerAppComponent
+import com.example.todo.modules.EditItemModule
 
 class TodoApplication : Application() {
 
