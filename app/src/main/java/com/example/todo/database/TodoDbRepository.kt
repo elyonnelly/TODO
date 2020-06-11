@@ -19,7 +19,6 @@ import javax.inject.Inject
 class TodoDbRepository @Inject constructor(private val todoDao : TodoDao) : Repository<ListItemModel> {
     var currentId : Int = 0
 
-    //это тоже Provide???
     init {
         todoDao.getSize().subscribeOn(Schedulers.io()).subscribe {
             size -> currentId = size

@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 import java.time.LocalDate
 import javax.inject.Inject
 
-class AddItemInteractor @Inject constructor(private val repository : Repository<ListItemModel>) {
+class AddItemInteractor constructor(private val repository : Repository<ListItemModel>) {
 
     fun addItem(title : String, description : String, date : LocalDate) : Completable {
         return repository.add(ListItemModel(0, title, description, date, false))
