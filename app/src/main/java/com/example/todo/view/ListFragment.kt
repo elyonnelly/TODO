@@ -31,6 +31,13 @@ class ListFragment : MvpAppCompatFragment(), ListView {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        listComponent = DaggerListComponent.builder()
+            .appComponent((activity?.application as TodoApplication).appComponent)
+            .build()
+        super.onCreate(savedInstanceState)
+    }
+
     private val changeTaskStatusListener : OnChangeTaskStatusListener = object  : OnChangeTaskStatusListener {
         override fun onChangeTaskStatus(id: Int, status: Boolean) {
             listPresenter.onChangeTaskStatus(id, status)
@@ -41,11 +48,6 @@ class ListFragment : MvpAppCompatFragment(), ListView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        listComponent = DaggerListComponent
-            .builder()
-            .appComponent((activity?.application as TodoApplication).appComponent)
-            .build()
-
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_list, container, false)
     }

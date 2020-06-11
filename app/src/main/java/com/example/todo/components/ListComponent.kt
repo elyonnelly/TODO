@@ -1,5 +1,7 @@
 package com.example.todo.components
 
+import com.example.todo.ListItemModel
+import com.example.todo.Repository
 import com.example.todo.components.AppComponent
 import com.example.todo.modules.ListModule
 import com.example.todo.mvpPresenters.ListPresenter
@@ -11,13 +13,6 @@ import dagger.Component
 @Component(dependencies = [AppComponent::class], modules = [ListModule::class])
 @ListFragmentScope
 interface ListComponent {
-
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun appComponent(appComponent: AppComponent): Builder
-        fun build() : ListComponent
-    }
-
+    fun repository() : Repository<ListItemModel>
     fun getPresenter() : ListPresenter
 }

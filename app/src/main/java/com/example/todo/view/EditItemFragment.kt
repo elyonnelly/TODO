@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.todo.R
 import com.example.todo.TodoApplication
+import com.example.todo.components.DaggerEditItemComponent
 import com.example.todo.components.EditItemComponent
 import com.example.todo.mvpPresenters.EditItemPresenter
 import kotlinx.android.synthetic.main.fragment_item.*
@@ -22,18 +23,12 @@ class EditItemFragment : ItemFragment()  {
         editItemComponent.getPresenter()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        editItemComponent = DaggerEditItemComponent
-            .builder()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        editItemComponent = DaggerEditItemComponent.builder()
             .appComponent((activity?.application as TodoApplication).appComponent)
             .parameters(ItemParameters(getIdFromArgument()))
             .build()
-
-        return super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

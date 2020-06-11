@@ -19,16 +19,11 @@ class AddItemFragment : ItemFragment() {
         addItemComponent.getPresenter()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        addItemComponent = DaggerAddItemComponent
-            .builder()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        addItemComponent = DaggerAddItemComponent.builder()
             .appComponent((activity?.application as TodoApplication).appComponent)
             .build()
-        return super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
