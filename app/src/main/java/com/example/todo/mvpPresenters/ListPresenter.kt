@@ -12,8 +12,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class ListPresenter(private val interactor: ListInteractor)
-                    : MvpPresenter<ListView>() {
+class ListPresenter(private val interactor: ListInteractor) : MvpPresenter<ListView>() {
 
     fun onShowAll() {
         setTodoItems { interactor.getAll() }

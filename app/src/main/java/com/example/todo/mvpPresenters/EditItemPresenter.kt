@@ -11,8 +11,7 @@ import moxy.MvpPresenter
 import java.time.LocalDate
 
 @InjectViewState
-class EditItemPresenter(private val interactor: EditItemInteractor)
-                        : MvpPresenter<ItemView>() {
+class EditItemPresenter(private val interactor: EditItemInteractor) : MvpPresenter<ItemView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

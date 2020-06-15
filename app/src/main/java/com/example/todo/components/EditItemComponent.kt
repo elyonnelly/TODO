@@ -1,6 +1,5 @@
 package com.example.todo.components
 
-import android.content.Context
 import com.example.todo.ListItemModel
 import com.example.todo.Repository
 import com.example.todo.modules.EditItemModule

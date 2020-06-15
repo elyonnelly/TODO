@@ -11,8 +11,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @InjectViewState
-class AddItemPresenter(private val interactor: AddItemInteractor)
-                        : MvpPresenter<ItemView>() {
+class AddItemPresenter(private val interactor: AddItemInteractor) : MvpPresenter<ItemView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
