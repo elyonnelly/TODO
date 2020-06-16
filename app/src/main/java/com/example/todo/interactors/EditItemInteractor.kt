@@ -15,13 +15,11 @@ class EditItemInteractor(private val parameters : ItemParameters,
 
     fun getItem() : Single<ListItemModel> {
         return repository.get(parameters.id)
-            .subscribeOn(Schedulers.io())
             .map { it.copyToModel() }
     }
 
     fun editItem(newTitle : String, newDescription : String, newDate : LocalDate): Completable {
         return repository.get(parameters.id)
-            .subscribeOn(Schedulers.io())
             .map { entity -> entity.copyToModel() }
             .flatMapCompletable {
                 repository.update(it.copy(title = newTitle, description = newDescription, date = newDate))

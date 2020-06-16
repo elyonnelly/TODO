@@ -12,6 +12,5 @@ class AddItemInteractor constructor(private val repository : Repository<ListItem
 
     fun addItem(title : String, description : String, date : LocalDate) : Single<Long> {
         return repository.add(ListItemModel(0, title, description, date, false))
-            .subscribeOn(Schedulers.io())
     }
 }

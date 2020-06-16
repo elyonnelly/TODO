@@ -13,7 +13,6 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
 
     fun getAll() : Single<List<ListItemModel>> {
         return repository.getAll()
-            .subscribeOn(Schedulers.io())
             .map {
                     entities -> entities.map { entity -> entity.copyToModel() }
             }
@@ -21,7 +20,6 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
 
     fun getActive() : Single<List<ListItemModel>> {
         return repository.getAll()
-            .subscribeOn(Schedulers.io())
             .map {
                     entities -> entities.map { entity -> entity.copyToModel() }
                                         .filter { item -> !item.done }
@@ -30,7 +28,6 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
 
     fun getDone() : Single<List<ListItemModel>> {
         return repository.getAll()
-            .subscribeOn(Schedulers.io())
             .map {
                     entities -> entities.map { entity -> entity.copyToModel() }
                                         .filter { item -> item.done }
@@ -39,7 +36,6 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
 
     fun changeTaskStatus(id : Long, status : Boolean) : Completable {
         return repository.get(id)
-            .subscribeOn(Schedulers.io())
             .map { entity -> entity.copyToModel() }
             .flatMapCompletable {
                 repository.update(it.copy(done = status))
@@ -48,7 +44,6 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
 
     fun checkTaskStatus(id : Long) : Single<Boolean> {
         return repository.get(id)
-                .subscribeOn(Schedulers.io())
                 .map { it.done }
     }
 }
