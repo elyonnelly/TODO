@@ -3,7 +3,9 @@ package com.example.todo
 import androidx.test.runner.AndroidJUnit4
 import com.example.todo.database.ListItemEntity
 import com.example.todo.interactors.AddItemInteractor
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.subscribers.TestSubscriber
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,9 +20,10 @@ class AddItemInteractorTest : InteractorTest() {
         val newItem = ListItemModel(0,"title", "description", LocalDate.now(), false)
 
         addNewItem(newItem, addItemInteractor)
-
+//мокаю ровно один метод и ровно с такими-то аргументами, и проверяем, что вызывается метод
+        //Single.just(1) типа возвращать
         var items = emptyList<ListItemEntity>()
-        appComponent.repository().getAll().observeOn(AndroidSchedulers.mainThread()).subscribe{ it -> items = it}
+        appComponent.repository().getAll().observeOn(AndroidSchedulers.mainThread()).subscribe(TestSubscriber<List<ListItemEntity>>())
 
         Assert.assertEquals(1, items.size)
 
