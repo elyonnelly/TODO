@@ -7,8 +7,8 @@ import java.time.LocalDate
 
 @Entity(tableName = "item_table")
 data class ListItemEntity (
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
     val title: String,
     val description: String,
     val date: LocalDate,

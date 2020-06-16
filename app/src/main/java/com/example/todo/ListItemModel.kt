@@ -4,7 +4,7 @@ import com.example.todo.database.ListItemEntity
 import java.time.LocalDate
 
 data class ListItemModel(
-    val id: Int,
+    val id: Long,
     val title: String,
     val description: String,
     val date: LocalDate,

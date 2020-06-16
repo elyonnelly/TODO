@@ -22,7 +22,7 @@ class AddItemPresenter(private val interactor: AddItemInteractor) : MvpPresenter
         interactor.addItem(title, description, date)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                viewState.goBack()
+                it -> viewState.goBack()
             }
     }
 }

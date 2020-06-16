@@ -6,9 +6,10 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface Repository<T> {
-    fun get(id : Int) : Single<ListItemEntity>
-    fun add(value : T): Completable
+    fun get(id : Long) : Single<ListItemEntity>
+    fun add(value : T): Single<Long>
     fun update(value : T): Completable
-    fun remove(id : Int): Completable
+    fun remove(id : Long): Completable
     fun getAll() : Single<List<ListItemEntity>>
+    fun clear() : Completable
 }

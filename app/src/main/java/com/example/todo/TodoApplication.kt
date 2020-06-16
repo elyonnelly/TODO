@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.todo.components.AppComponent
 import com.example.todo.components.DaggerAppComponent
 import com.example.todo.modules.EditItemModule
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class TodoApplication : Application() {
 
@@ -13,10 +14,9 @@ class TodoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = buildAppComponent()
-        //repository = TodoDbRepository(TodoListRoomDatabase.getDatabase(context = this).todoListDao())//SimpleTodoRepository()
     }
 
-    protected fun buildAppComponent() : AppComponent {
+    private fun buildAppComponent() : AppComponent {
         return DaggerAppComponent.builder()
             .context(this)
             .build()

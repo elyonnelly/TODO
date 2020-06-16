@@ -22,7 +22,7 @@ class ListPresenter(private val interactor: ListInteractor) : MvpPresenter<ListV
         viewState.navigateToAddNewItemFragment()
     }
 
-    fun onClickEditNewItem(id : Int) {
+    fun onClickEditNewItem(id : Long) {
         interactor.checkTaskStatus(id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { status ->
@@ -32,7 +32,7 @@ class ListPresenter(private val interactor: ListInteractor) : MvpPresenter<ListV
             }
     }
 
-    fun onChangeTaskStatus(id : Int, status : Boolean) {
+    fun onChangeTaskStatus(id : Long, status : Boolean) {
         interactor.changeTaskStatus(id, status).subscribe()
     }
 

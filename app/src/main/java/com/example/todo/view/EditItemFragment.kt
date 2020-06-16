@@ -41,16 +41,16 @@ class EditItemFragment : ItemFragment()  {
         }
     }
 
-    private fun getIdFromArgument() : Int {
-        val id = arguments?.getInt("id")
+    private fun getIdFromArgument() : Long {
+        val id = arguments?.getLong("id")
         return id!!
     }
 
     companion object {
-        fun newInstance(id : Int) =
+        fun newInstance(id : Long) =
             EditItemFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_ID, id)
+                    putLong(ARG_ID, id)
                 }
             }
     }

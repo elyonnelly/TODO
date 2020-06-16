@@ -17,6 +17,6 @@ interface ListView : MvpView {
     fun navigateToAddNewItemFragment()
 
     @StateStrategyType(SkipStrategy::class)
-    fun navigateToEditNewItemFragment(id : Int)
+    fun navigateToEditNewItemFragment(id : Long)
 
 }

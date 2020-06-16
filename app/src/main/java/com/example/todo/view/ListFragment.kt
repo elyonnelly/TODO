@@ -26,7 +26,7 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     private val listPresenter by moxyPresenter { listComponent.getPresenter() }
 
     private val clickListener : OnEditClickListener = object : OnEditClickListener {
-        override fun onClick(id: Int) {
+        override fun onClick(id: Long) {
             listPresenter.onClickEditNewItem(id)
         }
     }
@@ -39,7 +39,7 @@ class ListFragment : MvpAppCompatFragment(), ListView {
     }
 
     private val changeTaskStatusListener : OnChangeTaskStatusListener = object  : OnChangeTaskStatusListener {
-        override fun onChangeTaskStatus(id: Int, status: Boolean) {
+        override fun onChangeTaskStatus(id: Long, status: Boolean) {
             listPresenter.onChangeTaskStatus(id, status)
         }
     }
@@ -95,7 +95,7 @@ class ListFragment : MvpAppCompatFragment(), ListView {
         navigateTo(AddItemFragment())
     }
 
-    override fun navigateToEditNewItemFragment(id: Int) {
+    override fun navigateToEditNewItemFragment(id: Long) {
         navigateTo(EditItemFragment.newInstance(id))
     }
 

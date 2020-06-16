@@ -37,7 +37,7 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
             }
     }
 
-    fun changeTaskStatus(id : Int, status : Boolean) : Completable {
+    fun changeTaskStatus(id : Long, status : Boolean) : Completable {
         return repository.get(id)
             .subscribeOn(Schedulers.io())
             .map { entity -> entity.copyToModel() }
@@ -46,7 +46,7 @@ class ListInteractor(private val repository : Repository<ListItemModel>) {
             }
     }
 
-    fun checkTaskStatus(id : Int) : Single<Boolean> {
+    fun checkTaskStatus(id : Long) : Single<Boolean> {
         return repository.get(id)
                 .subscribeOn(Schedulers.io())
                 .map { it.done }

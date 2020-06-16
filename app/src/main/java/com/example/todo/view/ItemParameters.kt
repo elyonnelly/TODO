@@ -1,3 +1,3 @@
 package com.example.todo.view
 
-data class ItemParameters(val id : Int)
+data class ItemParameters(val id : Long)
