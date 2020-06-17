@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.ListItemModel
 import com.example.todo.R
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class TodoListAdapter(private val dataSet: List<ListItemModel>,
                       private val clickListener: OnEditClickListener,
@@ -20,6 +21,7 @@ class TodoListAdapter(private val dataSet: List<ListItemModel>,
         val title : TextView = view.findViewById(R.id.title)
         val description : TextView = view.findViewById(R.id.description)
         val date : TextView = view.findViewById(R.id.date)
+        val time : TextView = view.findViewById(R.id.time)
         val done : CheckBox = view.findViewById(R.id.done)
     }
 
@@ -36,6 +38,9 @@ class TodoListAdapter(private val dataSet: List<ListItemModel>,
 
         val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
         holder.date.text = dataSet[position].date.format(formatter)
+
+        holder.time.text = dataSet[position].time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+
         holder.done.isChecked = dataSet[position].done
         
         holder.done.setOnCheckedChangeListener {

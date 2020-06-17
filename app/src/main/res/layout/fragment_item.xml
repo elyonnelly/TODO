@@ -65,6 +65,24 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/selectDateButton"
             app:layout_constraintStart_toEndOf="@+id/selectDateButton" />
 
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectTimeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/edit_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectDateButton" />
+
+    <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/selectTimeButton"
+            app:layout_constraintStart_toEndOf="@+id/selectTimeButton" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editItemButton"
             android:layout_width="wrap_content"

@@ -9,10 +9,9 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 
-@Database(entities = [ListItemEntity::class], version = 2)
+@Database(entities = [ListItemEntity::class], version = 3)
 @TypeConverters(DateTypeConverter::class)
 abstract class TodoListRoomDatabase : RoomDatabase() {
-    //наверное это @Provide??
     abstract fun todoListDao() : TodoDao
 
     companion object {

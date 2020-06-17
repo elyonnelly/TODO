@@ -41,6 +41,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description" />
 
+    <TextView
+            android:id="@+id/time"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="148dp"
+            android:ems="10"
+            app:layout_constraintBaseline_toBaselineOf="@+id/date"
+            app:layout_constraintStart_toStartOf="parent" />
+
     <CheckBox
             android:id="@+id/done"
             style="@style/TextAppearance.MaterialComponents.Overline"

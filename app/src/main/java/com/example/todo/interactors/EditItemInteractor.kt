@@ -9,6 +9,7 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.time.LocalDate
+import java.time.LocalTime
 
 class EditItemInteractor(private val parameters : ItemParameters,
                          private val repository : Repository<ListItemModel>) {
@@ -18,11 +19,11 @@ class EditItemInteractor(private val parameters : ItemParameters,
             .map { it.copyToModel() }
     }
 
-    fun editItem(newTitle : String, newDescription : String, newDate : LocalDate): Completable {
+    fun editItem(newTitle : String, newDescription : String, newDate : LocalDate, newTime : LocalTime): Completable {
         return repository.get(parameters.id)
             .map { entity -> entity.copyToModel() }
             .flatMapCompletable {
-                repository.update(it.copy(title = newTitle, description = newDescription, date = newDate))
+                repository.update(it.copy(title = newTitle, description = newDescription, date = newDate, time = newTime))
             }
     }
 }

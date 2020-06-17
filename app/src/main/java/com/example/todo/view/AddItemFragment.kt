@@ -30,7 +30,10 @@ class AddItemFragment : ItemFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         editItemButton.setOnClickListener {
-            addItemPresenter.onClickAddItem(titleEditItemText.text.toString(), descriptionEditItemText.text.toString(), date)
+            addItemPresenter.onClickAddItem(titleEditItemText.text.toString(),
+                                            descriptionEditItemText.text.toString(),
+                                            date,
+                                            time)
         }
     }
 

@@ -37,7 +37,8 @@ class EditItemFragment : ItemFragment()  {
         editItemButton.setOnClickListener {
             editItemPresenter.onClickEditItem(titleEditItemText.text.toString(),
                                 descriptionEditItemText.text.toString(),
-                                date)
+                                date,
+                                time)
         }
     }
 

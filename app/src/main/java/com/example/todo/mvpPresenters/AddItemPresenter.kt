@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 @InjectViewState
@@ -15,11 +16,11 @@ class AddItemPresenter(private val interactor: AddItemInteractor) : MvpPresenter
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.setItemToView("", "", LocalDate.now())
+        viewState.setItemToView("", "", LocalDate.now(), LocalTime.now())
     }
 
-    fun onClickAddItem(title : String, description : String, date : LocalDate) {
-        interactor.addItem(title, description, date)
+    fun onClickAddItem(title : String, description : String, date : LocalDate, time : LocalTime) {
+        interactor.addItem(title, description, date, time)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 it -> viewState.goBack()

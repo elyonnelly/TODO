@@ -5,11 +5,12 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import java.time.LocalDate
+import java.time.LocalTime
 
 interface ItemView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun goBack()
     @StateStrategyType(SkipStrategy::class)
-    fun setItemToView(title : String, description : String, date : LocalDate)
+    fun setItemToView(title : String, description : String, date : LocalDate, time : LocalTime)
 }
