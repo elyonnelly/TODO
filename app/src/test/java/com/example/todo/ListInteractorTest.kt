@@ -29,7 +29,7 @@ class ListInteractorTest {
         interactor.getAll().subscribe(observer)
 
         observer.assertComplete()
-        observer.assertValue { it.containsAll(models) and models.containsAll(it) }
+        observer.assertValue { it == models }
     }
 
     @Test
@@ -48,7 +48,7 @@ class ListInteractorTest {
         interactor.getActive().subscribe(observer)
 
         observer.assertComplete()
-        observer.assertValue { it.containsAll(activeModels) and activeModels.containsAll(it) }
+        observer.assertValue { it == activeModels }
     }
 
     @Test
@@ -67,7 +67,7 @@ class ListInteractorTest {
         interactor.getDone().subscribe(observer)
 
         observer.assertComplete()
-        observer.assertValue { it.containsAll(completedModels) and completedModels.containsAll(it) }
+        observer.assertValue { it == completedModels }
     }
 
     @Test
@@ -118,11 +118,8 @@ class ListInteractorTest {
     }
 
     private fun createItems() : List<ListItemEntity> {
-        val list = mutableListOf<ListItemEntity>()
-        for(i in 1..10) {
-            val randomModel = ListItemEntity(i.toLong(), "title", "desc", LocalDate.now(), Random.nextBoolean())
-            list.add(randomModel)
+        return List(10) {
+                i -> ListItemEntity(i.toLong(), "title", "desc", LocalDate.now(), Random.nextBoolean())
         }
-        return list.toList()
     }
 }

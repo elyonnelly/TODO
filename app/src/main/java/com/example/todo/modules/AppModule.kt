@@ -9,6 +9,8 @@ import com.example.todo.database.TodoListRoomDatabase
 import com.example.todo.scopes.AppScope
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
+import io.reactivex.schedulers.Schedulers
 
 @Module
 class AppModule {
@@ -28,6 +30,6 @@ class AppModule {
     @Provides
     @AppScope
     fun provideRepository(todoDao: TodoDao) : Repository<ListItemModel> {
-        return TodoDbRepository(todoDao)
+        return TodoDbRepository(todoDao, Schedulers.io())
     }
 }
