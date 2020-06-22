@@ -84,4 +84,6 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.27'
 
     testImplementation "io.mockk:mockk:1.10.0"
+
+    implementation 'androidx.work:work-runtime:2.3.4'
 }
